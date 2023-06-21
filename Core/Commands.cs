@@ -17,6 +17,8 @@ public class Commands
 
         commands.Add("goto", Goto);
         commands.Add("click", Click);
+        commands.Add("pagetitle", GetPageTitle);
+        commands.Add("is", Is);
     }
 
     public async Task RunCommand(string command, string arguments)
@@ -51,6 +53,23 @@ public class Commands
         }
 
         await page.ClickAsync(locator);
+    }
+
+    private async Task GetPageTitle(string title)
+    {
+        var currentTitle = await page.TitleAsync();
+        if (currentTitle == title)
+        {
+            Console.WriteLine("Title is correct");
+        }
+
+        Console.WriteLine($"Expected '{title}' but found '{currentTitle}'");
+    }
+
+    private async Task Is(string assertion)
+    {
+        var options = assertion.Split(" ");
+        commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());
     }
 
     private async Task OpenPage(bool force = false)
