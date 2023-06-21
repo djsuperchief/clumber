@@ -13,3 +13,12 @@ goto https://sadtrombone.com
 click play
 is pagetitle Sad Trombone
 ```
+
+## Dev Notes
+### Powershell - Raspberry Pi
+[Raspbian Powershell install instructions](https://learn.microsoft.com/en-us/powershell/scripting/install/install-raspbian?view=powershell-7.3)
+
+### Playwright Install
+```
+pwsh bin/Debug/netX/playwright.ps1 install
+```

@@ -33,7 +33,7 @@ public class Browser : IDisposable
 
         var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = false
+            Headless = true
         });
         return new Browser(browser);
     }
