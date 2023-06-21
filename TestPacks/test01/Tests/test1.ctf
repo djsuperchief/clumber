@@ -1,2 +1,3 @@
 goto https://bbc.co.uk
-is pagetitle Sad Trombone
+screenshot
+is pagetitle BBC - Home

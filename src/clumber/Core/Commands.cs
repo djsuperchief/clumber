@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Clumber;
+using System.IO;
 using Microsoft.Playwright;
 
 namespace Clumber.Core;
@@ -14,15 +15,19 @@ public class Commands
     private readonly Dictionary<string, Func<string, Task>> commands = new();
     private readonly IEnumerable<Entities.Identifier> _identifiers;
 
-    public Commands(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers)
+    private readonly string _screenshotsFolder;
+
+    public Commands(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
     {
         browser = inboundBrowser;
         _identifiers = identifiers;
+        _screenshotsFolder = screenshotFolder;
 
         commands.Add("goto", Goto);
         commands.Add("click", Click);
         commands.Add("pagetitle", GetPageTitle);
         commands.Add("is", Is);
+        commands.Add("screenshot", ScreenShot);
     }
 
     public async Task RunCommand(string command, string arguments)
@@ -92,5 +97,20 @@ public class Commands
         {
             page = await browser.PlBrowser.NewPageAsync();
         }
+    }
+
+    private async Task ScreenShot(string arguments)
+    {
+        if (!Directory.Exists(_screenshotsFolder))
+        {
+            Directory.CreateDirectory(_screenshotsFolder);
+        }
+
+        var name = $"{_screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
+        await page.ScreenshotAsync(new PageScreenshotOptions
+        {
+            Path = name,
+            FullPage = false
+        });
     }
 }
