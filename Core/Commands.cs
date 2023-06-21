@@ -61,6 +61,7 @@ public class Commands
         if (currentTitle == title)
         {
             Console.WriteLine("Title is correct");
+            return;
         }
 
         Console.WriteLine($"Expected '{title}' but found '{currentTitle}'");
