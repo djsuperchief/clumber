@@ -1,4 +1,6 @@
-﻿namespace Clumber.Exceptions;
+﻿using System;
+
+namespace Clumber.Exceptions;
 public class CommandNotFoundException : Exception
 {
     public CommandNotFoundException(string message) : base(message)

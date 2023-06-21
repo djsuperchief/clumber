@@ -1,5 +1,6 @@
-﻿namespace Clumber.Entities;
+﻿using System.Collections.Generic;
 
+namespace Clumber.Entities;
 
 public class TestPack
 {

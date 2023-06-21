@@ -1,4 +1,7 @@
-﻿namespace Clumber.Core;
+﻿using System.Collections.Generic;
+using System.IO;
+
+namespace Clumber.Core;
 public class TestFileParser
 {
     private readonly string _testFile;

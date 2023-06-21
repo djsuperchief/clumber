@@ -1,4 +1,8 @@
-using clumber;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Clumber;
 using Microsoft.Playwright;
 
 namespace Clumber.Core;
@@ -60,7 +64,7 @@ public class Commands
         var currentTitle = await page.TitleAsync();
         if (currentTitle == title)
         {
-            Console.WriteLine("Title is correct");
+            Console.WriteLine($"Title is correct ('{title}')");
             return;
         }
 
@@ -70,7 +74,7 @@ public class Commands
     private async Task Is(string assertion)
     {
         var options = assertion.Split(" ");
-        commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());
+        await commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());
     }
 
     private async Task OpenPage(bool force = false)

@@ -1,4 +1,6 @@
-﻿namespace Clumber.Entities;
+﻿using System.Collections.Generic;
+
+namespace Clumber.Entities;
 public class Identifier
 {
     private readonly Dictionary<Enums.ObjectTypeIdentifier, string> _identifierOutput = new Dictionary<Enums.ObjectTypeIdentifier, string>()

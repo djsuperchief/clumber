@@ -1,8 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System;
 
 Console.WriteLine("MVP of UI test suite for non devs");
 
-using (var browser = await Clumber.Core.Browser.CreateChromeBrowser())
+await using (var browser = await Clumber.Core.Browser.CreateChromeBrowser())
 {
     var testFilePath = "./TestPacks/test01/Tests/test1.ctf";
     var identFile = "./TestPacks/test01/Identifiers.cvf";

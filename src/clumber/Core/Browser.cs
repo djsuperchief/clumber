@@ -1,7 +1,9 @@
-﻿using Microsoft.Playwright;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Playwright;
 
 namespace Clumber.Core;
-public class Browser : IDisposable
+public class Browser : IDisposable, IAsyncDisposable
 {
     public IBrowser PlBrowser { get; private set; }
 
@@ -20,10 +22,20 @@ public class Browser : IDisposable
     {
         if (disposing)
         {
-            _ = Task.FromResult(result: () =>
+            /*var disposeTask = Task.Run(async () =>
             {
-                return PlBrowser.CloseAsync();
+                await PlBrowser.CloseAsync();
+                await PlBrowser.DisposeAsync();
             });
+            disposeTask.RunSynchronously();*/
+
+
+            _ = Task.FromResult(result: async () =>
+            {
+                await PlBrowser.CloseAsync();
+                return PlBrowser.DisposeAsync();
+            });
+
         }
     }
 
@@ -36,5 +48,11 @@ public class Browser : IDisposable
             Headless = true
         });
         return new Browser(browser);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await PlBrowser.CloseAsync();
+        await PlBrowser.DisposeAsync();
     }
 }
