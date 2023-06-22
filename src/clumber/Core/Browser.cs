@@ -59,7 +59,7 @@ public class Browser : IDisposable, IAsyncDisposable
 
     public async Task CreatePage()
     {
-        if (CurrentPage is not null)
+        if (CurrentPage is null)
         {
             CurrentPage = await PlBrowser.NewPageAsync();
         }
@@ -67,7 +67,7 @@ public class Browser : IDisposable, IAsyncDisposable
 
     public async Task ClosePage()
     {
-        if (CurrentPage is null)
+        if (CurrentPage is not null)
         {
             await CurrentPage.CloseAsync();
             CurrentPage = null;
