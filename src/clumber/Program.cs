@@ -4,6 +4,8 @@ using BenchmarkDotNet.Running;
 
 Console.WriteLine("MVP of UI test suite for non devs");
 
+//var launchArgs = Environment.GetCommandLineArgs();
+
 // var screenshotFolder = "./TestPacks/test01/screenshots";
 // var testFilePath = "./TestPacks/test01/Tests/test1.ctf";
 // var identFile = "./TestPacks/test01/Identifiers.cvf";
