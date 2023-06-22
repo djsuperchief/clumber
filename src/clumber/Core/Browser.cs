@@ -7,7 +7,7 @@ public class Browser : IDisposable, IAsyncDisposable
 {
     public IBrowser PlBrowser { get; private set; }
 
-    public IPage CurrentPage { get; private set; }
+    public IPage? CurrentPage { get; private set; }
 
     public IEnumerable<Entities.Identifier> Identifiers { get; private set; }
 
@@ -67,7 +67,7 @@ public class Browser : IDisposable, IAsyncDisposable
 
     public async Task ClosePage()
     {
-        if (CurrentPage is not null)
+        if (CurrentPage is null)
         {
             await CurrentPage.CloseAsync();
             CurrentPage = null;
