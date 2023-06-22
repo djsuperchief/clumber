@@ -7,9 +7,15 @@ public class Browser : IDisposable, IAsyncDisposable
 {
     public IBrowser PlBrowser { get; private set; }
 
-    public Browser(IBrowser browser)
+    public IPage CurrentPage { get; private set; }
+
+    public IEnumerable<Entities.Identifier> Identifiers { get; private set; }
+
+    public Browser(IBrowser browser, IEnumerable<Entities.Identifier> identifiers)
     {
-        this.PlBrowser = browser;
+        PlBrowser = browser;
+        Identifiers = identifiers;
+
     }
 
     public void Dispose()
@@ -39,7 +45,7 @@ public class Browser : IDisposable, IAsyncDisposable
         }
     }
 
-    public static async Task<Browser> CreateChromeBrowser()
+    public static async Task<Browser> CreateChromeBrowser(IEnumerable<Entities.Identifier> identifiers)
     {
         var playwright = await Microsoft.Playwright.Playwright.CreateAsync();
 
@@ -47,7 +53,25 @@ public class Browser : IDisposable, IAsyncDisposable
         {
             Headless = true
         });
-        return new Browser(browser);
+
+        return new Browser(browser, identifiers);
+    }
+
+    public async Task CreatePage()
+    {
+        if (CurrentPage is not null)
+        {
+            CurrentPage = await PlBrowser.NewPageAsync();
+        }
+    }
+
+    public async Task ClosePage()
+    {
+        if (CurrentPage is not null)
+        {
+            await CurrentPage.CloseAsync();
+            CurrentPage = null;
+        }
     }
 
     public async ValueTask DisposeAsync()
