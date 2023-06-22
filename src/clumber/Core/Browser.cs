@@ -15,7 +15,6 @@ public class Browser : IDisposable, IAsyncDisposable
     {
         PlBrowser = browser;
         Identifiers = identifiers;
-
     }
 
     public void Dispose()

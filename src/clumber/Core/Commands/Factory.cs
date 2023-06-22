@@ -26,7 +26,7 @@ public class Factory
         commands.Add("goto", new Goto(_browser));
         commands.Add("click", new Click(_browser));
         commands.Add("pagetitle", new GetPageTitle(_browser));
-        commands.Add("is", new Is(_browser));
+        commands.Add("is", new Is(_browser, this));
         commands.Add("screenshot", new ScreenShot(_browser));
     }
 }

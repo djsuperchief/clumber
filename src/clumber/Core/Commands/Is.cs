@@ -1,16 +1,16 @@
 namespace Clumber.Core.Commands;
 
-public class Is : AbstractCommand
+public class Is : AbstractAssertion
 {
-    public Is(Browser browser) : base(browser)
+    public Is(Browser browser, Factory commandFactory) : base(browser, commandFactory)
     {
 
     }
 
     protected override async Task RunCommand(string arguments)
     {
-        /*var options = arguments.Split(" ");
-        await commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());*/
-        Console.WriteLine("Needs to be moved to an assertion factory");
+        var options = arguments.Split(" ");
+        await _commandFactory.CreateCommand(options[0].Trim()).Run(string.Join(" ", options[1..]).Trim());
+
     }
 }
