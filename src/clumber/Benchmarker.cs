@@ -5,14 +5,18 @@ namespace Clumber;
 [MemoryDiagnoser]
 public class Benchmarker
 {
-    private readonly string screenshotFolder = "./TestPacks/test01/screenshots";
-    private readonly string testFilePath = "./TestPacks/test01/Tests/test1.ctf";
-    private readonly string identFile = "./TestPacks/test01/Identifiers.cvf";
+    private readonly string screenshotFolder;
+    private readonly string testFilePath;
+    private readonly string identFile;
     Clumber.Core.IdentifierParser identParser;
 
     public Benchmarker()
     {
         identParser = new Clumber.Core.IdentifierParser(identFile);
+        var folderName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().FullName);
+        screenshotFolder = $"{folderName}/test01/screenshots";
+        testFilePath = $"{folderName}/test01/Tests/test1.ctf";
+        identFile = "{folderName}/test01/Identifiers.cvf";
     }
 
     [Benchmark]

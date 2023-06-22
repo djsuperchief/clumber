@@ -16,4 +16,13 @@
     <Folder Include="Helpers/" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="BenchmarkPack/bbc/Identifiers.cvf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BenchmarkPack/bbc/Tests/test1.ctf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
