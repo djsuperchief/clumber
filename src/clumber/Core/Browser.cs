@@ -37,6 +37,12 @@ public class Browser : IDisposable, IAsyncDisposable
 
             _ = Task.FromResult(result: async () =>
             {
+                Console.WriteLine("Disposing");
+                await ClosePage();
+                foreach (var context in PlBrowser.Contexts)
+                {
+                    await context.CloseAsync();
+                }
                 await PlBrowser.CloseAsync();
                 return PlBrowser.DisposeAsync();
             });
@@ -75,6 +81,11 @@ public class Browser : IDisposable, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        Console.WriteLine("Disposing");
+        await ClosePage();
+        foreach (var context in PlBrowser.Contexts) {
+            await context.CloseAsync();
+        }
         await PlBrowser.CloseAsync();
         await PlBrowser.DisposeAsync();
     }

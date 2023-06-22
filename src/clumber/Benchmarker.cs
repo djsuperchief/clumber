@@ -12,11 +12,11 @@ public class Benchmarker
 
     public Benchmarker()
     {
+        var folderName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        screenshotFolder = $"{folderName}/BenchmarkPack/bbc/screenshots";
+        testFilePath = $"{folderName}/BenchmarkPack/bbc/Tests/test1.ctf";
+        identFile = $"{folderName}/BenchmarkPack/bbc/Identifiers.cvf";
         identParser = new Clumber.Core.IdentifierParser(identFile);
-        var folderName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().FullName);
-        screenshotFolder = $"{folderName}/test01/screenshots";
-        testFilePath = $"{folderName}/test01/Tests/test1.ctf";
-        identFile = "{folderName}/test01/Identifiers.cvf";
     }
 
     [Benchmark]
@@ -32,7 +32,6 @@ public class Benchmarker
             {
                 await commands.RunCommand(instruction.Command, instruction.Inputs);
             }
-            System.Threading.Thread.Sleep(5000);
         }
     }
 
@@ -48,7 +47,6 @@ public class Benchmarker
             {
                 await commandFactory.CreateCommand(instruction.Command).Run(instruction.Inputs);
             }
-            System.Threading.Thread.Sleep(5000);
         }
     }
 }
