@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using Microsoft.Playwright;
 
 namespace Clumber.Core;
 
-public class Commands
+public class Delegates
 {
     private readonly Browser browser;
     private IPage? page;
@@ -17,7 +17,7 @@ public class Commands
 
     private readonly string _screenshotsFolder;
 
-    public Commands(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
+    public Delegates(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
     {
         browser = inboundBrowser;
         _identifiers = identifiers;
@@ -113,4 +113,4 @@ public class Commands
             FullPage = false
         });
     }
-}*/
+}

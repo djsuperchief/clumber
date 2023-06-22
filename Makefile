@@ -5,3 +5,5 @@ run:
 
 run-release:
 	@dotnet run --project src/clumber --property:Configuration=Release
+
+run-benchmark: run-release
