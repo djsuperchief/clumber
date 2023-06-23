@@ -7,7 +7,7 @@ public class ScreenShot : AbstractCommand
     // TODO: Remove this and do this properly.
     private readonly string _screenshotsFolder = "./TestPacks/test01/screenshots";
 
-    public ScreenShot(Browser browser) : base(browser)
+    public ScreenShot(BrowserV2 browser) : base(browser)
     {
 
     }

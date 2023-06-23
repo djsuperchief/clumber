@@ -2,7 +2,7 @@ namespace Clumber.Core.Commands;
 
 public class Is : AbstractAssertion
 {
-    public Is(Browser browser, Factory commandFactory) : base(browser, commandFactory)
+    public Is(BrowserV2 browser, Factory commandFactory) : base(browser, commandFactory)
     {
 
     }
@@ -11,6 +11,5 @@ public class Is : AbstractAssertion
     {
         var options = arguments.Split(" ");
         await _commandFactory.CreateCommand(options[0].Trim()).Run(string.Join(" ", options[1..]).Trim());
-
     }
 }

@@ -10,14 +10,14 @@ namespace Clumber.Core;
 
 public class Delegates
 {
-    private readonly Browser browser;
-    private IPage? page;
+    private readonly BrowserV2 browser;
+
     private readonly Dictionary<string, Func<string, Task>> commands = new();
     private readonly IEnumerable<Entities.Identifier> _identifiers;
 
     private readonly string _screenshotsFolder;
 
-    public Delegates(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
+    public Delegates(BrowserV2 inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
     {
         browser = inboundBrowser;
         _identifiers = identifiers;
@@ -49,7 +49,7 @@ public class Delegates
     private async Task Goto(string url)
     {
 
-        await page.GotoAsync(url);
+        await browser.CurrentPage.GotoAsync(url)!;
         await Task.CompletedTask;
     }
 
@@ -61,12 +61,12 @@ public class Delegates
             locator = _identifiers.Single(x => x.Name == identifier).ToString();
         }
 
-        await page.ClickAsync(locator);
+        await browser.CurrentPage.ClickAsync(locator);
     }
 
     private async Task GetPageTitle(string title)
     {
-        var currentTitle = await page.TitleAsync();
+        var currentTitle = await browser.CurrentPage.TitleAsync();
         if (currentTitle == title)
         {
             Console.WriteLine($"Title is correct ('{title}')");
@@ -84,19 +84,7 @@ public class Delegates
 
     private async Task OpenPage(bool force = false)
     {
-        if (force)
-        {
-            if (page != null)
-            {
-                await page.CloseAsync();
-                page = null;
-            }
-        }
-
-        if (page == null)
-        {
-            page = await browser.PlBrowser.NewPageAsync();
-        }
+        await browser.CreatePage();
     }
 
     private async Task ScreenShot(string arguments)
@@ -107,7 +95,7 @@ public class Delegates
         }
 
         var name = $"{_screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
-        await page.ScreenshotAsync(new PageScreenshotOptions
+        await browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
         {
             Path = name,
             FullPage = false

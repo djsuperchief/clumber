@@ -2,9 +2,9 @@ namespace Clumber.Core.Commands;
 
 public abstract class AbstractCommand
 {
-    protected readonly Browser _browser;
+    protected readonly BrowserV2 _browser;
 
-    public AbstractCommand(Browser browser)
+    public AbstractCommand(BrowserV2 browser)
     {
         _browser = browser;
     }

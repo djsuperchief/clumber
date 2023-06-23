@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Clumber.Entities;
 
@@ -9,4 +10,9 @@ public class TestPack
     public List<Entities.TestFile> Tests { get; private set; }
 
     public string Location { get; private set; }
+
+    public static TestPack Load(string directory)
+    {
+        throw new NotImplementedException();
+    }
 }
