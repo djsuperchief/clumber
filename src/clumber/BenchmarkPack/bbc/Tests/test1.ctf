@@ -1,2 +1,2 @@
-goto https://bbc.co.uk
-is pagetitle BBC - Home
+goto http://localhost
+is pagetitle Clumber - Test
