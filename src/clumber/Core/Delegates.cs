@@ -1,24 +1,33 @@
-using clumber;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Clumber;
+using System.IO;
 using Microsoft.Playwright;
 
 namespace Clumber.Core;
 
-public class Commands
+public class Delegates
 {
-    private readonly Browser browser;
-    private IPage? page;
+    private readonly BrowserV2 browser;
+
     private readonly Dictionary<string, Func<string, Task>> commands = new();
     private readonly IEnumerable<Entities.Identifier> _identifiers;
 
-    public Commands(Browser inboundBrowser, IEnumerable<Entities.Identifier> identifiers)
+    private readonly string _screenshotsFolder;
+
+    public Delegates(BrowserV2 inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
     {
         browser = inboundBrowser;
         _identifiers = identifiers;
+        _screenshotsFolder = screenshotFolder;
 
         commands.Add("goto", Goto);
         commands.Add("click", Click);
         commands.Add("pagetitle", GetPageTitle);
         commands.Add("is", Is);
+        commands.Add("screenshot", ScreenShot);
     }
 
     public async Task RunCommand(string command, string arguments)
@@ -40,7 +49,7 @@ public class Commands
     private async Task Goto(string url)
     {
 
-        await page.GotoAsync(url);
+        await browser.CurrentPage.GotoAsync(url)!;
         await Task.CompletedTask;
     }
 
@@ -52,15 +61,15 @@ public class Commands
             locator = _identifiers.Single(x => x.Name == identifier).ToString();
         }
 
-        await page.ClickAsync(locator);
+        await browser.CurrentPage.ClickAsync(locator);
     }
 
     private async Task GetPageTitle(string title)
     {
-        var currentTitle = await page.TitleAsync();
+        var currentTitle = await browser.CurrentPage.TitleAsync();
         if (currentTitle == title)
         {
-            Console.WriteLine("Title is correct");
+            Console.WriteLine($"Title is correct ('{title}')");
             return;
         }
 
@@ -70,23 +79,26 @@ public class Commands
     private async Task Is(string assertion)
     {
         var options = assertion.Split(" ");
-        commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());
+        await commands[options[0].Trim()](string.Join(" ", options[1..]).Trim());
     }
 
     private async Task OpenPage(bool force = false)
     {
-        if (force)
+        await browser.CreatePage();
+    }
+
+    private async Task ScreenShot(string arguments)
+    {
+        if (!Directory.Exists(_screenshotsFolder))
         {
-            if (page != null)
-            {
-                await page.CloseAsync();
-                page = null;
-            }
+            Directory.CreateDirectory(_screenshotsFolder);
         }
 
-        if (page == null)
+        var name = $"{_screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
+        await browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
         {
-            page = await browser.PlBrowser.NewPageAsync();
-        }
+            Path = name,
+            FullPage = false
+        });
     }
 }

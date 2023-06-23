@@ -1,4 +1,6 @@
-﻿namespace Clumber.Exceptions;
+﻿using System;
+
+namespace Clumber.Exceptions;
 public class CommandArgumentException : Exception
 {
     public CommandArgumentException(string message) : base(message)

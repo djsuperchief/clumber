@@ -1,3 +1,3 @@
-goto https://sadtrombone.com
-click play
-is pagetitle Sad Trombone
+goto https://bbc.co.uk
+screenshot
+is pagetitle BBC - Home
