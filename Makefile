@@ -6,4 +6,5 @@ run:
 run-release:
 	@dotnet run --project src/clumber -c Release
 
-run-benchmark: run-release
+run-benchmark:
+	@dotnet run --project src/clumber -c Release -- -b
