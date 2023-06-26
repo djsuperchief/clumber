@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B349649
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clumber.Tests", "tests\Clumber.Tests\Clumber.Tests.csproj", "{E816B9F2-649B-4FFD-84E9-9323D9B619A1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{5EA5029B-3B40-4E86-A383-58328DA9305A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +34,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E816B9F2-649B-4FFD-84E9-9323D9B619A1} = {6B349649-8918-4372-B336-B8FB0E0091A5}
+		{685FD944-B9A9-4DB0-8B43-BD2C1F1A6A48} = {5EA5029B-3B40-4E86-A383-58328DA9305A}
 	EndGlobalSection
 EndGlobal
