@@ -2,7 +2,7 @@ namespace Clumber.Core.Commands;
 
 public class Click : AbstractCommand
 {
-    public Click(BrowserV2 browser) : base(browser)
+    public Click(BrowserHelper browser) : base(browser)
     {
 
     }

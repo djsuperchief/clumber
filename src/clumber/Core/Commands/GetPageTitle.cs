@@ -2,7 +2,7 @@ namespace Clumber.Core.Commands;
 
 public class GetPageTitle : AbstractCommand
 {
-    public GetPageTitle(BrowserV2 browser) : base(browser)
+    public GetPageTitle(BrowserHelper browser) : base(browser)
     {
 
     }

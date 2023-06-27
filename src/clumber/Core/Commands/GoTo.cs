@@ -2,7 +2,7 @@ namespace Clumber.Core.Commands;
 
 public class Goto : AbstractCommand
 {
-    public Goto(BrowserV2 browser) : base(browser)
+    public Goto(BrowserHelper browser) : base(browser)
     {
 
     }

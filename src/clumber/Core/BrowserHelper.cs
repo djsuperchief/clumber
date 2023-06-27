@@ -2,7 +2,7 @@ using Microsoft.Playwright;
 
 namespace Clumber.Core;
 
-public class BrowserV2
+public class BrowserHelper
 {
     public IBrowserContext Browser { get; private set; }
 
@@ -10,7 +10,7 @@ public class BrowserV2
 
     public IEnumerable<Entities.Identifier> Identifiers { get; private set; }
 
-    public BrowserV2(IBrowserContext playwrightBrowser, IEnumerable<Entities.Identifier> identifiers)
+    public BrowserHelper(IBrowserContext playwrightBrowser, IEnumerable<Entities.Identifier> identifiers)
     {
         Browser = playwrightBrowser;
         Identifiers = identifiers;

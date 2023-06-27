@@ -1,4 +1,5 @@
 using BenchmarkDotNet.Attributes;
+using Clumber.Contracts;
 using Microsoft.Playwright;
 
 namespace Clumber;
@@ -9,7 +10,10 @@ public class Benchmarker
     private readonly string screenshotFolder;
     private readonly string testFilePath;
     private readonly string identFile;
-    private IBrowser playwright;
+
+    private readonly IBrowserFactory _browserFactory;
+
+    private IBrowser playwright = default!;
     Clumber.Core.IdentifierParser identParser;
 
     public Benchmarker()
@@ -19,13 +23,13 @@ public class Benchmarker
         testFilePath = $"{folderName}/BenchmarkPack/bbc/Tests/test1.ctf";
         identFile = $"{folderName}/BenchmarkPack/bbc/Identifiers.cvf";
         identParser = new Clumber.Core.IdentifierParser(identFile);
-
+        _browserFactory = new Core.BrowserFactory(); // need to inject this in.
     }
 
     [GlobalSetup]
     public async Task Setup()
     {
-        playwright = await Clumber.Core.BrowserV2.CreateChromeBrowser();
+        playwright = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium);
     }
 
     [Benchmark]
@@ -33,7 +37,7 @@ public class Benchmarker
     {
         var identifiers = identParser.Parse();
         var context = await playwright.NewContextAsync();
-        var browser = new Core.BrowserV2(context, identifiers);
+        var browser = new Core.BrowserHelper(context, identifiers);
 
         var parser = new Clumber.Core.TestFileParser(testFilePath);
         var test = parser.Parse();
@@ -51,7 +55,7 @@ public class Benchmarker
     {
         var identifiers = identParser.Parse();
         var context = await playwright.NewContextAsync();
-        var browser = new Core.BrowserV2(context, identifiers);
+        var browser = new Core.BrowserHelper(context, identifiers);
         var commandFactory = new Clumber.Core.Commands.Factory(browser);
         var parser = new Clumber.Core.TestFileParser(testFilePath);
         var test = parser.Parse();

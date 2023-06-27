@@ -2,7 +2,7 @@ namespace Clumber.Core.Commands;
 
 public class Is : AbstractAssertion
 {
-    public Is(BrowserV2 browser, Factory commandFactory) : base(browser, commandFactory)
+    public Is(BrowserHelper browser, Factory commandFactory) : base(browser, commandFactory)
     {
 
     }

@@ -10,14 +10,14 @@ namespace Clumber.Core;
 
 public class Delegates
 {
-    private readonly BrowserV2 browser;
+    private readonly BrowserHelper browser;
 
     private readonly Dictionary<string, Func<string, Task>> commands = new();
     private readonly IEnumerable<Entities.Identifier> _identifiers;
 
     private readonly string _screenshotsFolder;
 
-    public Delegates(BrowserV2 inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
+    public Delegates(BrowserHelper inboundBrowser, IEnumerable<Entities.Identifier> identifiers, string screenshotFolder)
     {
         browser = inboundBrowser;
         _identifiers = identifiers;
