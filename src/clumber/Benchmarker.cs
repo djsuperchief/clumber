@@ -14,7 +14,7 @@ public class Benchmarker
     private readonly IBrowserFactory _browserFactory;
 
     private IBrowser playwright = default!;
-    Clumber.Core.IdentifierParser identParser;
+    private readonly Clumber.Core.IdentifierParser identParser;
 
     public Benchmarker()
     {
