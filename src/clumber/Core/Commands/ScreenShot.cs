@@ -4,26 +4,27 @@ namespace Clumber.Core.Commands;
 
 public class ScreenShot : AbstractCommand
 {
-    // TODO: Remove this and do this properly.
-    private readonly string _screenshotsFolder = "./TestPacks/test01/screenshots";
 
-    public ScreenShot(BrowserV2 browser) : base(browser)
+    public ScreenShot(BrowserHelper browser) : base(browser)
     {
-
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
-        if (!Directory.Exists(_screenshotsFolder))
+        var screenshotsFolder = Path.Combine(packContext, "Screenshots");
+        if (!Directory.Exists(screenshotsFolder))
         {
-            Directory.CreateDirectory(_screenshotsFolder);
+            Directory.CreateDirectory(screenshotsFolder);
         }
 
-        var name = $"{_screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
-        await _browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
-        {
-            Path = name,
-            FullPage = false
-        });
+        var name = $"{screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
+        if _browser is null || _browser?.CurrentPage is null return;
+        
+            await _browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
+            {
+                Path = name,
+                FullPage = false
+            });
+        
     }
 }

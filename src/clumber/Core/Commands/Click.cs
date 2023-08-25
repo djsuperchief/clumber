@@ -2,13 +2,14 @@ namespace Clumber.Core.Commands;
 
 public class Click : AbstractCommand
 {
-    public Click(BrowserV2 browser) : base(browser)
+    public Click(BrowserHelper browser) : base(browser)
     {
 
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
+        if (_browser is null || _browser?.CurrentPage is null) return;
         var locator = string.Empty;
         if (_browser.Identifiers.Any(x => x.Name == arguments))
         {

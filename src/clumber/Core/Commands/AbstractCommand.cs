@@ -2,20 +2,20 @@ namespace Clumber.Core.Commands;
 
 public abstract class AbstractCommand
 {
-    protected readonly BrowserV2 _browser;
+    protected readonly BrowserHelper _browser;
 
-    public AbstractCommand(BrowserV2 browser)
+    public AbstractCommand(BrowserHelper browser)
     {
         _browser = browser;
     }
 
-    public async Task Run(string arguments)
+    public async Task Run(string arguments, string packContext)
     {
         await OpenPage();
-        await RunCommand(arguments);
+        await RunCommand(arguments, packContext);
     }
 
-    protected abstract Task RunCommand(string arguments);
+    protected abstract Task RunCommand(string arguments, string packContext);
 
     protected async Task OpenPage(bool force = false)
     {

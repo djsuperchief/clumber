@@ -1,0 +1,3 @@
+# Proposed config file for EACH test
+browsers=chrome,edge,firefox,webkit
+headless=true

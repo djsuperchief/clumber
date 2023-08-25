@@ -2,12 +2,14 @@ namespace Clumber.Core.Commands;
 
 public class Factory
 {
-    private readonly BrowserV2 _browser;
+    private readonly BrowserHelper _browser;
+    private readonly string _testFolder;
     private readonly Dictionary<string, AbstractCommand> commands = new();
 
-    public Factory(BrowserV2 browser)
+    public Factory(BrowserHelper browser, string testFolder)
     {
         _browser = browser;
+        _testFolder = testFolder;
         AddFactoryClasses();
     }
 

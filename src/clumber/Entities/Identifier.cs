@@ -11,9 +11,9 @@ public class Identifier
     };
     public Enums.ObjectTypeIdentifier IdentifierType { get; init; }
 
-    public string Name { get; init; }
+    public string Name { get; init; } = default!;
 
-    public string Value { get; init; }
+    public string Value { get; init; } = default!;
 
     public override string ToString()
     {

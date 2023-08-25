@@ -5,8 +5,6 @@ using System.Text.RegularExpressions;
 namespace Clumber.Core;
 public class IdentifierParser
 {
-    private readonly string _identifierFile;
-
     private readonly Regex _identRegex = new Regex(@"(?<=\[)(.*?)(?=\])", RegexOptions.Compiled);
 
     private readonly Dictionary<string, Enums.ObjectTypeIdentifier> _identifiers = new Dictionary<string, Enums.ObjectTypeIdentifier>()
@@ -16,30 +14,32 @@ public class IdentifierParser
         { "tag", Enums.ObjectTypeIdentifier.Tag},
     };
 
-    public IdentifierParser(string identifierFile)
+    public IdentifierParser()
     {
-        _identifierFile = identifierFile;
+
     }
 
-    public List<Entities.Identifier> Parse()
+    public List<Entities.Identifier> Parse(string identifierFile)
     {
         var entities = new List<Entities.Identifier>();
-        using var reader = new StreamReader(_identifierFile);
+        using var reader = new StreamReader(identifierFile);
         do
         {
             var unsplit = reader.ReadLine();
             var line = unsplit?.Split(" ");
-            if (line.Length > 0)
+            if (line?.Length > 0)
             {
                 var name = line[0].Trim();
-                var rest = _identRegex.Match(unsplit)?.Value.Split('=');
-                entities.Add(new Entities.Identifier()
+                var rest = _identRegex.Match(unsplit!)?.Value.Split('=');
+                if (rest?.Length > 0)
                 {
-                    Name = name,
-                    IdentifierType = _identifiers[rest[0]],
-                    Value = rest[1]
-                });
-
+                    entities.Add(new Entities.Identifier()
+                    {
+                        Name = name,
+                        IdentifierType = _identifiers[rest[0]],
+                        Value = rest[1]
+                    });
+                }
             }
         } while (reader.EndOfStream == false);
 
