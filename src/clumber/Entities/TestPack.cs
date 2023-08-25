@@ -9,13 +9,14 @@ public class TestPack
     private const string TestsDirectory = "Tests";
     private const string IdentifiersFile = "Identifiers.cvf";
     private readonly IdentifierParser _identifierParser = new();
+
     public IEnumerable<Entities.Identifier>? Identifiers { get; private set; }
 
     public List<Entities.TestFile> Tests { get; private set; }
 
     public string Location { get; private set; }
 
-    public static TestPack Load(string directory)
+    public static TestPack Load(string directory, ILogger logger)
     {
         var tests = Directory.GetFiles(Path.Combine(directory, TestsDirectory), "*.ctf");
 
@@ -37,7 +38,7 @@ public class TestPack
 
         foreach (var test in tests)
         {
-            response.Tests.Add(new Entities.TestFile(test, directory));
+            response.Tests.Add(new Entities.TestFile(test, directory, logger));
         }
 
         return response;

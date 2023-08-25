@@ -36,16 +36,16 @@ public class TestRunner
     private async Task RunPack(string packLocation)
     {
         _logger.Info($"---- Running Pack {Path.GetDirectoryName(packLocation)} ----");
-        var testPack = Entities.TestPack.Load(packLocation);
+        var testPack = Entities.TestPack.Load(packLocation, _logger);
         var browserContext = await _chromeInstance.NewContextAsync();
         var browserHelper = new Core.BrowserHelper(browserContext, testPack.Identifiers);
         var commandFactory = new Core.Commands.Factory(browserHelper, packLocation);
 
         foreach (var test in testPack.Tests)
         {
-            _logger.Ok("Running Test.....");
+            _logger.Warn("Running Test...");
             await test.Run(commandFactory);
-            _logger.Ok("------ END ------");
+            _logger.Warn("------ END ------");
         }
     }
 }

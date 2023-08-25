@@ -27,6 +27,13 @@ public class ConsoleLogger : ILogger
         Console.ForegroundColor = ConsoleColor.White;
     }
 
+    public void TestInfo(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine(message);
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
     public void Warn(string message)
     {
         Console.ForegroundColor = ConsoleColor.Yellow;

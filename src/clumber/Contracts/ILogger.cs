@@ -9,4 +9,6 @@ public interface ILogger
     void Fatal(string message);
 
     void Ok(string message);
+
+    void TestInfo(string message);
 }
