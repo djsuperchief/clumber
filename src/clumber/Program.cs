@@ -2,7 +2,8 @@
 using System;
 using BenchmarkDotNet.Running;
 
-Console.WriteLine("MVP of UI test suite for non devs");
+Console.WriteLine(Clumber.Resources.Title);
+
 for (var i = 0; i < args.Length; i++)
 {
     // ewww

@@ -11,6 +11,7 @@ public class TestRunner
     private IBrowser _firefoxInstance = default!;
     private IBrowser _webkitInstance = default!;
     private readonly IBrowserFactory _browserFactory;
+    private readonly ILogger _logger = new ConsoleLogger();
 
     public TestRunner(IBrowserFactory browserFactory, string testPackLocation)
     {
@@ -21,6 +22,7 @@ public class TestRunner
     public async Task Run()
     {
         // Create an initial instance of all browsers.
+        _logger.Info("--- Starting Tests ---");
         _chromeInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium);
         _firefoxInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Firefox);
         _webkitInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Webkit);
@@ -33,6 +35,7 @@ public class TestRunner
 
     private async Task RunPack(string packLocation)
     {
+        _logger.Info($"---- Running Pack {Path.GetDirectoryName(packLocation)} ----");
         var testPack = Entities.TestPack.Load(packLocation);
         var browserContext = await _chromeInstance.NewContextAsync();
         var browserHelper = new Core.BrowserHelper(browserContext, testPack.Identifiers);
@@ -40,7 +43,9 @@ public class TestRunner
 
         foreach (var test in testPack.Tests)
         {
+            _logger.Ok("Running Test.....");
             await test.Run(commandFactory);
+            _logger.Ok("------ END ------");
         }
     }
 }
