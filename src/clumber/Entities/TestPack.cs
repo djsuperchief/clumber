@@ -8,6 +8,8 @@ public class TestPack
 {
     private const string TestsDirectory = "Tests";
     private const string IdentifiersFile = "Identifiers.cvf";
+
+    private const string ConfigFile = "Config.ccf";
     private readonly IdentifierParser _identifierParser = new();
 
     public IEnumerable<Entities.Identifier>? Identifiers { get; private set; }
@@ -15,6 +17,8 @@ public class TestPack
     public List<Entities.TestFile> Tests { get; private set; } = default!;
 
     public string Location { get; private set; } = default!;
+
+    public Config Config { get; set; } = default!;
 
     public static TestPack Load(string directory, ILogger logger)
     {
@@ -34,6 +38,11 @@ public class TestPack
         if (Path.Exists(Path.Combine(directory, IdentifiersFile)))
         {
             response._identifierParser.Parse(Path.Combine(directory, IdentifiersFile));
+        }
+
+        if (Path.Exists(Path.Combine(directory, ConfigFile)))
+        {
+            response.Config = Config.Load(Path.Combine(directory, ConfigFile));
         }
 
         foreach (var test in tests)

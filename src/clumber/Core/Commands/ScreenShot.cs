@@ -18,13 +18,13 @@ public class ScreenShot : AbstractCommand
         }
 
         var name = $"{screenshotsFolder}/{Guid.NewGuid().ToString("N")}.png";
-        if _browser is null || _browser?.CurrentPage is null return;
-        
-            await _browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
-            {
-                Path = name,
-                FullPage = false
-            });
-        
+        if (_browser is null || _browser?.CurrentPage is null) return;
+
+        await _browser.CurrentPage.ScreenshotAsync(new PageScreenshotOptions
+        {
+            Path = name,
+            FullPage = false
+        });
+
     }
 }
