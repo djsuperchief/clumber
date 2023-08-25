@@ -51,3 +51,6 @@ Current benchmark against the following page served by nginx:
 ```
 pwsh bin/Debug/netX/playwright.ps1 install
 ```
+
+## ToDo
+WIP.
