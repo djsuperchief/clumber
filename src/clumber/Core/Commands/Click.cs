@@ -9,6 +9,7 @@ public class Click : AbstractCommand
 
     protected override async Task RunCommand(string arguments, string packContext)
     {
+        if (_browser is null || _browser?.CurrentPage is null) return;
         var locator = string.Empty;
         if (_browser.Identifiers.Any(x => x.Name == arguments))
         {

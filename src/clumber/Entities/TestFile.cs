@@ -46,7 +46,7 @@ public class TestFile
             }
 
             var line = readLine?.Split(" ");
-            if (line.Length > 0)
+            if (line?.Length > 0)
             {
                 Instructions.Add(new Entities.Instruction
                 {

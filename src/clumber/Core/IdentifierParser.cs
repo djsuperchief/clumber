@@ -27,17 +27,19 @@ public class IdentifierParser
         {
             var unsplit = reader.ReadLine();
             var line = unsplit?.Split(" ");
-            if (line.Length > 0)
+            if (line?.Length > 0)
             {
                 var name = line[0].Trim();
-                var rest = _identRegex.Match(unsplit)?.Value.Split('=');
-                entities.Add(new Entities.Identifier()
+                var rest = _identRegex.Match(unsplit!)?.Value.Split('=');
+                if (rest?.Length > 0)
                 {
-                    Name = name,
-                    IdentifierType = _identifiers[rest[0]],
-                    Value = rest[1]
-                });
-
+                    entities.Add(new Entities.Identifier()
+                    {
+                        Name = name,
+                        IdentifierType = _identifiers[rest[0]],
+                        Value = rest[1]
+                    });
+                }
             }
         } while (reader.EndOfStream == false);
 

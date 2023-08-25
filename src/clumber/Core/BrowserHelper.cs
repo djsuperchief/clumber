@@ -10,10 +10,10 @@ public class BrowserHelper
 
     public IEnumerable<Entities.Identifier> Identifiers { get; private set; }
 
-    public BrowserHelper(IBrowserContext playwrightBrowser, IEnumerable<Entities.Identifier> identifiers)
+    public BrowserHelper(IBrowserContext playwrightBrowser, IEnumerable<Entities.Identifier>? identifiers)
     {
         Browser = playwrightBrowser;
-        Identifiers = identifiers;
+        Identifiers = identifiers ?? new List<Entities.Identifier>();
     }
 
     public async Task CreatePage()

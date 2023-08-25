@@ -18,7 +18,7 @@ public class TestFileParser
         do
         {
             var line = reader.ReadLine()?.Split(" ");
-            if (line.Length > 0)
+            if (line?.Length > 0)
             {
                 response.Add(new Entities.Instruction
                 {
@@ -39,7 +39,7 @@ public class TestFileParser
         do
         {
             var line = reader.ReadLine()?.Split(" ");
-            if (line.Length > 0)
+            if (line?.Length > 0)
             {
                 response.Add(new Entities.Instruction
                 {

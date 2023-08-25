@@ -32,37 +32,37 @@ public class Benchmarker
         playwright = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium);
     }
 
-    [Benchmark]
-    public async Task RunDelegateTestRunner()
-    {
-        var identifiers = identParser.Parse(identFile);
-        var context = await playwright.NewContextAsync();
-        var browser = new Core.BrowserHelper(context, identifiers);
+    // [Benchmark]
+    // public async Task RunDelegateTestRunner()
+    // {
+    //     var identifiers = identParser.Parse(identFile);
+    //     var context = await playwright.NewContextAsync();
+    //     var browser = new Core.BrowserHelper(context, identifiers);
 
-        var parser = new Clumber.Core.TestFileParser(testFilePath);
-        var test = parser.Parse();
-        var commands = new Clumber.Core.Delegates(browser, identifiers, screenshotFolder);
-        foreach (var instruction in test)
-        {
-            await commands.RunCommand(instruction.Command, instruction.Inputs);
-        }
+    //     var parser = new Clumber.Core.TestFileParser(testFilePath);
+    //     var test = parser.Parse();
+    //     var commands = new Clumber.Core.Delegates(browser, identifiers, screenshotFolder);
+    //     foreach (var instruction in test)
+    //     {
+    //         await commands.RunCommand(instruction.Command, instruction.Inputs);
+    //     }
 
-        await context.CloseAsync();
-    }
+    //     await context.CloseAsync();
+    // }
 
-    [Benchmark]
-    public async Task RunFactoryCommandTestRunner()
-    {
-        // var identifiers = identParser.Parse();
-        // var context = await playwright.NewContextAsync();
-        // var browser = new Core.BrowserHelper(context, identifiers);
-        // var commandFactory = new Clumber.Core.Commands.Factory(browser);
-        // var parser = new Clumber.Core.TestFileParser(testFilePath);
-        // var test = parser.Parse();
-        // foreach (var instruction in test)
-        // {
-        //     await commandFactory.CreateCommand(instruction.Command).Run(instruction.Inputs);
-        // }
-        // await context.CloseAsync();
-    }
+    // [Benchmark]
+    // public async Task RunFactoryCommandTestRunner()
+    // {
+    //     var identifiers = identParser.Parse();
+    //     var context = await playwright.NewContextAsync();
+    //     var browser = new Core.BrowserHelper(context, identifiers);
+    //     var commandFactory = new Clumber.Core.Commands.Factory(browser);
+    //     var parser = new Clumber.Core.TestFileParser(testFilePath);
+    //     var test = parser.Parse();
+    //     foreach (var instruction in test)
+    //     {
+    //         await commandFactory.CreateCommand(instruction.Command).Run(instruction.Inputs);
+    //     }
+    //     await context.CloseAsync();
+    // }
 }

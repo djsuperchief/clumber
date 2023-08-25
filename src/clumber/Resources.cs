@@ -7,8 +7,10 @@ internal static class Resources
     public const string UnknownBrowserSelection = "The selected browser is not a known type.";
     public const string NoTestsFound = "No tests have been found in the test pack.";
 
+    public const string UnableToLoadTestPack = "Unable to load test pack.";
+
     public const string Title = @"
-    ---------------------------------------------|
+    |--------------------------------------------|
     |   ___  __    _  _  _  _  ____  ____  ____  |
     |  / __)(  )  / )( \( \/ )(  _ \(  __)(  _ \ |
     | ( (__ / (_/\) \/ (/ \/ \ ) _ ( ) _)  )   / |

@@ -5,7 +5,7 @@
 /// </summary>
 public class Instruction
 {
-    public string Command { get; init; }
+    public string Command { get; init; } = default!;
 
-    public string Inputs { get; init; }
+    public string Inputs { get; init; } = default!;
 }

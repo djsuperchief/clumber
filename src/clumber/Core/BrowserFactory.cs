@@ -4,8 +4,6 @@ namespace Clumber.Core;
 
 public class BrowserFactory : Contracts.IBrowserFactory
 {
-    private IBrowser? _browser;
-
     private IPlaywright? _playwright;
 
     public async Task<IBrowser> CreateBrowserInstance(Enums.BrowserType browserType)
