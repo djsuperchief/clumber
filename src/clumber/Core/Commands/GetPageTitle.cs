@@ -7,7 +7,7 @@ public class GetPageTitle : AbstractCommand
 
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
         var currentTitle = await _browser.CurrentPage.TitleAsync();
         if (currentTitle == arguments)

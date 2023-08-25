@@ -13,9 +13,11 @@ for (var i = 0; i < args.Length; i++)
             var summary = BenchmarkRunner.Run<Clumber.Benchmarker>();
             break;
         case "-t":
-            // run test runner
-            Console.WriteLine("Test runner not yet implemented");
-            break;
+            var testLocation = args[i + 1];
+            var testRunner = new Clumber.Core.TestRunner(new Clumber.Core.BrowserFactory(), testLocation);
+            await testRunner.Run();
+            i++;
+            continue;
         default:
             Console.WriteLine("Switch not recognised.");
             return;

@@ -1,4 +1,5 @@
 using System.IO;
+using Clumber.Contracts;
 using Microsoft.Playwright;
 
 namespace Clumber.Core;
@@ -6,27 +7,40 @@ namespace Clumber.Core;
 public class TestRunner
 {
     private readonly string _testPackLocation;
-    private IBrowser _chromeInstance;
-    private IBrowser _firefoxInstance;
-    private IBrowser _webkitInstance;
+    private IBrowser _chromeInstance = default!;
+    private IBrowser _firefoxInstance = default!;
+    private IBrowser _webkitInstance = default!;
+    private readonly IBrowserFactory _browserFactory;
 
-    public TestRunner(string testPackLocation)
+    public TestRunner(IBrowserFactory browserFactory, string testPackLocation)
     {
         _testPackLocation = testPackLocation;
+        _browserFactory = browserFactory;
     }
 
     public async Task Run()
     {
-        // Line too long
+        // Create an initial instance of all browsers.
+        _chromeInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium);
+        _firefoxInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Firefox);
+        _webkitInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Webkit);
         if (!Directory.Exists(_testPackLocation)) throw new Exceptions.TestLoaderException(string.Format(Resources.TestLocationNotFound, _testPackLocation));
         foreach (var pack in Directory.EnumerateDirectories(_testPackLocation))
         {
-            
+            await RunPack(pack);
         }
     }
 
     private async Task RunPack(string packLocation)
     {
+        var testPack = Entities.TestPack.Load(packLocation);
+        var browserContext = await _chromeInstance.NewContextAsync();
+        var browserHelper = new Core.BrowserHelper(browserContext, testPack.Identifiers);
+        var commandFactory = new Core.Commands.Factory(browserHelper, packLocation);
 
+        foreach (var test in testPack.Tests)
+        {
+            await test.Run(commandFactory);
+        }
     }
 }

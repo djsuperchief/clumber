@@ -22,7 +22,7 @@ public class Benchmarker
         screenshotFolder = $"{folderName}/BenchmarkPack/bbc/screenshots";
         testFilePath = $"{folderName}/BenchmarkPack/bbc/Tests/test1.ctf";
         identFile = $"{folderName}/BenchmarkPack/bbc/Identifiers.cvf";
-        identParser = new Clumber.Core.IdentifierParser(identFile);
+        identParser = new Clumber.Core.IdentifierParser();
         _browserFactory = new Core.BrowserFactory(); // need to inject this in.
     }
 
@@ -35,7 +35,7 @@ public class Benchmarker
     [Benchmark]
     public async Task RunDelegateTestRunner()
     {
-        var identifiers = identParser.Parse();
+        var identifiers = identParser.Parse(identFile);
         var context = await playwright.NewContextAsync();
         var browser = new Core.BrowserHelper(context, identifiers);
 
@@ -53,16 +53,16 @@ public class Benchmarker
     [Benchmark]
     public async Task RunFactoryCommandTestRunner()
     {
-        var identifiers = identParser.Parse();
-        var context = await playwright.NewContextAsync();
-        var browser = new Core.BrowserHelper(context, identifiers);
-        var commandFactory = new Clumber.Core.Commands.Factory(browser);
-        var parser = new Clumber.Core.TestFileParser(testFilePath);
-        var test = parser.Parse();
-        foreach (var instruction in test)
-        {
-            await commandFactory.CreateCommand(instruction.Command).Run(instruction.Inputs);
-        }
-        await context.CloseAsync();
+        // var identifiers = identParser.Parse();
+        // var context = await playwright.NewContextAsync();
+        // var browser = new Core.BrowserHelper(context, identifiers);
+        // var commandFactory = new Clumber.Core.Commands.Factory(browser);
+        // var parser = new Clumber.Core.TestFileParser(testFilePath);
+        // var test = parser.Parse();
+        // foreach (var instruction in test)
+        // {
+        //     await commandFactory.CreateCommand(instruction.Command).Run(instruction.Inputs);
+        // }
+        // await context.CloseAsync();
     }
 }

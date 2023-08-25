@@ -7,9 +7,9 @@ public class Is : AbstractAssertion
 
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
         var options = arguments.Split(" ");
-        await _commandFactory.CreateCommand(options[0].Trim()).Run(string.Join(" ", options[1..]).Trim());
+        await _commandFactory.CreateCommand(options[0].Trim()).Run(string.Join(" ", options[1..]).Trim(), packContext);
     }
 }

@@ -13,13 +13,15 @@ public class BrowserFactory : Contracts.IBrowserFactory
         _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
         var launchOptions = new BrowserTypeLaunchOptions
         {
-            Headless = true
+            Headless = true,
         };
+
         IBrowser? response;
 
         switch (browserType)
         {
             case Enums.BrowserType.Chromium:
+                launchOptions.Channel = "chrome";
                 response = await _playwright.Chromium.LaunchAsync(launchOptions);
                 break;
             case Enums.BrowserType.Firefox:

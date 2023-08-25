@@ -7,7 +7,7 @@ public class Click : AbstractCommand
 
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
         var locator = string.Empty;
         if (_browser.Identifiers.Any(x => x.Name == arguments))

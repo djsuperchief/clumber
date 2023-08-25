@@ -7,7 +7,7 @@ public class Goto : AbstractCommand
 
     }
 
-    protected override async Task RunCommand(string arguments)
+    protected override async Task RunCommand(string arguments, string packContext)
     {
         await _browser.CurrentPage.GotoAsync(arguments);
     }
