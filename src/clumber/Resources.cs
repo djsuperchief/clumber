@@ -9,6 +9,8 @@ internal static class Resources
 
     public const string UnableToLoadTestPack = "Unable to load test pack.";
 
+    public const string ConfigBrowserException = "Config specifies an incorrect or unavailable browser type.";
+
     public const string Title = @"
     |--------------------------------------------|
     |   ___  __    _  _  _  _  ____  ____  ____  |

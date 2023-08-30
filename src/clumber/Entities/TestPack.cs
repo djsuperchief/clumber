@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Clumber.Contracts;
 using Clumber.Core;
+using Microsoft.Playwright;
 
 namespace Clumber.Entities;
 
@@ -11,6 +13,13 @@ public class TestPack
 
     private const string ConfigFile = "Config.ccf";
     private readonly IdentifierParser _identifierParser = new();
+    private readonly IBrowserFactory _browserFactory;
+    private readonly ILogger _logger;
+    private readonly Config _config;
+
+    private IBrowser _browserInstance = default!;
+    /*private IBrowser _firefoxInstance = default!;
+    private IBrowser _webkitInstance = default!;*/
 
     public IEnumerable<Entities.Identifier>? Identifiers { get; private set; }
 
@@ -18,9 +27,31 @@ public class TestPack
 
     public string Location { get; private set; } = default!;
 
-    public Config Config { get; set; } = default!;
+    private TestPack(IBrowserFactory browserFactory, ILogger logger, string location)
+    {
+        _browserFactory = browserFactory;
+        _logger = logger;
+        Location = location;
+        _config = Entities.Config.Load(Path.Combine(Location, ConfigFile));
+    }
 
-    public static TestPack Load(string directory, ILogger logger)
+    public async Task RunTests()
+    {
+        _browserInstance = await _browserFactory.CreateBrowserInstance(_config);
+        var browserContext = await _browserInstance.NewContextAsync();
+        var browserHelper = new Core.BrowserHelper(browserContext, Identifiers);
+        var commandFactory = new Core.Commands.Factory(browserHelper, Location);
+
+        foreach (var test in Tests)
+        {
+            _logger.Warn("Running Test...");
+            await test.Run(commandFactory);
+            _logger.Warn("------ END ------");
+        }
+
+    }
+
+    public static TestPack Load(string directory, ILogger logger, IBrowserFactory browserFactory)
     {
         var tests = Directory.GetFiles(Path.Combine(directory, TestsDirectory), "*.ctf");
 
@@ -29,20 +60,14 @@ public class TestPack
             throw new Exceptions.TestLoaderException(Resources.NoTestsFound);
         }
 
-        var response = new TestPack()
+        var response = new TestPack(browserFactory, logger, directory)
         {
-            Location = directory,
             Tests = new()
         };
 
         if (Path.Exists(Path.Combine(directory, IdentifiersFile)))
         {
             response._identifierParser.Parse(Path.Combine(directory, IdentifiersFile));
-        }
-
-        if (Path.Exists(Path.Combine(directory, ConfigFile)))
-        {
-            response.Config = Config.Load(Path.Combine(directory, ConfigFile));
         }
 
         foreach (var test in tests)

@@ -8,31 +8,39 @@ public class Config
 
     public static Config Load(string fileLocation)
     {
-        var response = new Config();
-        using var reader = new StreamReader(fileLocation);
-        do
+        var response = new Config()
         {
-            var readLine = reader.ReadLine();
-            if (readLine?.Substring(0, 1) == "#")
-            {
-                continue;
-            }
+            Browsers = new[] { "Chrome" },
+            Headless = true
+        };
 
-            var line = readLine?.Split("=");
-
-            if (line?.Length > 0)
+        if (File.Exists(fileLocation))
+        {
+            using var reader = new StreamReader(fileLocation);
+            do
             {
-                switch (line[0].ToLower())
+                var readLine = reader.ReadLine();
+                if (readLine?.Substring(0, 1) == "#")
                 {
-                    case "browsers":
-                        response.Browsers = line[1].Split(",");
-                        break;
-                    case "headless":
-                        response.Headless = bool.Parse(line[1]);
-                        break;
+                    continue;
                 }
-            }
-        } while (reader.EndOfStream == false);
+
+                var line = readLine?.Split("=");
+
+                if (line?.Length > 0)
+                {
+                    switch (line[0].ToLower())
+                    {
+                        case "browsers":
+                            response.Browsers = line[1].Split(",");
+                            break;
+                        case "headless":
+                            response.Headless = bool.Parse(line[1]);
+                            break;
+                    }
+                }
+            } while (reader.EndOfStream == false);
+        }
 
         return response;
     }

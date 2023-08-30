@@ -29,7 +29,7 @@ public class Benchmarker
     [GlobalSetup]
     public async Task Setup()
     {
-        playwright = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium);
+        playwright = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Chromium, Entities.Config.Load("Benchmark"));
     }
 
     // [Benchmark]
