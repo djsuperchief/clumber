@@ -8,6 +8,7 @@ public class Config
 
     public static Config Load(string fileLocation)
     {
+        // Should probably be Chromium
         var response = new Config()
         {
             Browsers = new[] { "Chrome" },
