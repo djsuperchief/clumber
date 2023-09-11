@@ -20,7 +20,7 @@ public class Config
             do
             {
                 var readLine = reader.ReadLine();
-                if (readLine?.Substring(0, 1) == "#")
+                if (string.IsNullOrEmpty(readLine) || readLine?.Substring(0, 1) == "#")
                 {
                     continue;
                 }

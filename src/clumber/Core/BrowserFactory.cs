@@ -12,6 +12,7 @@ public class BrowserFactory : Contracts.IBrowserFactory
     public BrowserFactory()
     {
         _browserTypes.Add("chrome", CreateChromeBrowser);
+        _browserTypes.Add("chromium", CreateChromiumBrowser);
         _browserTypes.Add("edge", CreateEdgeBrowser);
         _browserTypes.Add("msedge", CreateEdgeBrowser);
         _browserTypes.Add("firefox", CreateFirefoxBrowser);
@@ -78,6 +79,11 @@ public class BrowserFactory : Contracts.IBrowserFactory
     private async Task<IBrowser> CreateEdgeBrowser(string channel, Entities.Config config)
     {
         return await CreateBrowserInstance(Enums.BrowserType.Chromium, config, channel);
+    }
+
+    private async Task<IBrowser> CreateChromiumBrowser(string channel, Entities.Config config)
+    {
+        return await CreateBrowserInstance(Enums.BrowserType.Chromium, config, "");
     }
 
 }

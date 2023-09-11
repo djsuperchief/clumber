@@ -1,3 +1,4 @@
 # Proposed config file for EACH test
-browsers=msedge
-headless=false
+browsers=chromium
+headless=true
+

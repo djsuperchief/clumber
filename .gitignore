@@ -398,5 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 # clumber specific
-/**/screenshots
+/**/[Ss]creenshots
 .idea
+Requiredlibraries.txt
+post_thread.txt

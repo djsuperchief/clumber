@@ -18,8 +18,6 @@ public class TestPack
     private readonly Config _config;
 
     private IBrowser _browserInstance = default!;
-    /*private IBrowser _firefoxInstance = default!;
-    private IBrowser _webkitInstance = default!;*/
 
     public IEnumerable<Entities.Identifier>? Identifiers { get; private set; }
 

@@ -21,8 +21,6 @@ public class TestRunner
     {
         // Create an initial instance of all browsers.
         _logger.Info("--- Starting Tests ---");
-        //_firefoxInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Firefox);
-        //_webkitInstance = await _browserFactory.CreateBrowserInstance(Enums.BrowserType.Webkit);
         if (!Directory.Exists(_testPackLocation)) throw new Exceptions.TestLoaderException(string.Format(Resources.TestLocationNotFound, _testPackLocation));
         foreach (var pack in Directory.EnumerateDirectories(_testPackLocation))
         {
