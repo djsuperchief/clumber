@@ -8,7 +8,7 @@ public class Config
 
     public static Config Load(string fileLocation)
     {
-        // Should probably be Chromium
+        // Should probably be Chromium, also handling needs to be better. Maybe Ini file?
         var response = new Config()
         {
             Browsers = new[] { "Chrome" },
